@@ -20,7 +20,7 @@ CLIENT_SECRET = None
 def hello():
     """Index Page with greeting"""
     body = "<h1>Welcome to Fork It!</h1>"
-    body += "<h2>Fork It! will fork this github repo into your github repo.</h2>"
+    body += "<h2>Fork It! will fork this github repo into your github account.</h2>"
     body += "<h2>Click <a href='/startfork'> here to forkit!</a></h2>"
     body += "<img src='https://upload.wikimedia.org/wikipedia/en/6/6e/Forky_waving.png'>"
     return body
