@@ -19,10 +19,14 @@ CLIENT_SECRET = None
 @app.route("/")
 def hello():
     """Index Page with greeting"""
+    body = "<head><title>Fork It!</title></head>"
     body = "<h1>Welcome to Fork It!</h1>"
-    body += "<h2>Fork It! will fork this github repo into your github account.</h2>"
+    body += "<h2>Fork It!"
+    body += "will fork this github repo into your github account.</h2>"
     body += "<h2>Click <a href='/startfork'> here to forkit!</a></h2>"
-    body += "<img src='https://upload.wikimedia.org/wikipedia/en/6/6e/Forky_waving.png'>"
+    body += "<img src='"
+    body += "https://upload.wikimedia.org/wikipedia/en/6/6e/Forky_waving.png"
+    body += "'>"
     return body
 
 
@@ -65,7 +69,7 @@ def fork():
     return "Unknown error, contact michael.mileusnich@gmail.com"
 
 
-if  __name__ in ["__main__", "uwsgi_file_app"]:
+if __name__ in ["__main__", "uwsgi_file_app"]:
     cma = configargparse.ArgParser()
     cma.add('-c', '--config', required=False,
             default='default_settings.yaml',
