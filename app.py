@@ -21,7 +21,7 @@ def hello():
     """Index Page with greeting"""
     body = "<head><title>Fork It!</title></head>"
     body += "<h1>Welcome to Fork It!</h1>"
-    body += "<h2>Fork It!"
+    body += "<h2>Fork It! "
     body += "will fork this github repo into your github account.</h2>"
     body += "<h2>Click <a href='/startfork'> here to forkit!</a></h2>"
     body += "<img src='"
