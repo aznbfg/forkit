@@ -20,9 +20,9 @@ def hello():
 
 @app.route("/startfork")
 def startfork():
-    """Begins fork preocess, sends oauth request"""
+    """Begins fork process, sends oauth request"""
     redirect_url = 'https://github.com/login/oauth/authorize?client_id=' + \
-                   f'{CLIENT_ID}'
+                   f'{CLIENT_ID}&scope=repo'
     return redirect(redirect_url)
 
 
@@ -47,11 +47,11 @@ def fork():
     """Last step of the fork process"""
     auth_token = request.args.get("auth_token")
     repo = "forkit"
-    d = requests.post(f'https://api.github.com/repos/justmike2000/{repo}/forks/',
+    d = requests.post(f'https://api.github.com/repos/justmike2000/{repo}/forks',
                       headers={'Authorization': f'token {auth_token}',
                                'Content-Type': 'application/json'})
     if d.status_code >= 200 and d.status_code < 300:
-        return "Forked!  Check github:"
+        return "Forked!  Check your github!"
     else:
         print(d.__dict__)
         return "Unknown error, contact michael.mileusnich@gmail.com"
