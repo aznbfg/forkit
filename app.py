@@ -1,8 +1,14 @@
+#!/usr/bin/python3
+
+"""
+Webserver to ForkIt!
+"""
+
+from urllib.parse import parse_qs
 import configargparse
 from flask import Flask, redirect, request
 import requests
 import yaml
-from urllib.parse import parse_qs
 
 
 app = Flask(__name__)
@@ -29,7 +35,7 @@ def startfork():
 @app.route("/callback")
 def callback():
     """Callback for oauth request"""
-    code = request.args.get("code") 
+    code = request.args.get("code")
     auth_request = requests.post("https://github.com/login/oauth/access_token",
                                  data={"client_id": CLIENT_ID,
                                        "client_secret": CLIENT_SECRET,
@@ -38,27 +44,26 @@ def callback():
     auth_token = auth_content.get(b'access_token')
     if auth_token is None:
         return "Invalid request, contact michael.mileusnich@gmail.com", 500
-    else:
-        auth_token = auth_token[0].decode('utf-8')
+    auth_token = auth_token[0].decode('utf-8')
     return redirect(f"/fork?auth_token={auth_token}")
+
 
 @app.route("/fork")
 def fork():
     """Last step of the fork process"""
     auth_token = request.args.get("auth_token")
     repo = "forkit"
-    d = requests.post(f'https://api.github.com/repos/justmike2000/{repo}/forks',
-                      headers={'Authorization': f'token {auth_token}',
-                               'Content-Type': 'application/json'})
-    if d.status_code >= 200 and d.status_code < 300:
+    url = f'https://api.github.com/repos/justmike2000/{repo}/forks'
+    fork_req = requests.post(url,
+                             headers={'Authorization': f'token {auth_token}',
+                                      'Content-Type': 'application/json'})
+    if fork_req.status_code >= 200 and fork_req.status_code < 300:
         return "Forked!  Check your github!"
-    else:
-        print(d.__dict__)
-        return "Unknown error, contact michael.mileusnich@gmail.com"
+    print(fork_req.__dict__)
+    return "Unknown error, contact michael.mileusnich@gmail.com"
 
 
-if __name__ == "__main__" or __name__ == "uwsgi_file_app":
-    """Main + config"""
+if  __name__ in ["__main__", "uwsgi_file_app"]:
     cma = configargparse.ArgParser()
     cma.add('-c', '--config', required=False,
             default='default_settings.yaml',
