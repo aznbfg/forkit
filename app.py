@@ -78,7 +78,6 @@ if __name__ in ["__main__", "uwsgi_file_app"]:
     yaml_config = yaml.load(open(options.config).read())
     CLIENT_ID = yaml_config.get("github").get("client_id")
     CLIENT_SECRET = yaml_config.get("github").get("client_secret")
-    print(CLIENT_ID)
 
     if __name__ == "__main__":
         app.run()
